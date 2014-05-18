@@ -1,0 +1,13 @@
+# Commands
+commands.profiles.usage=/profile <list|load|save|delete> [имя профиля]
+commands.profiles.list.empty=Нет доступных профилей.
+commands.profiles.list.profiles=Следущие профили доступны (%d):
+commands.profiles.list.entry=  * %s
+commands.profiles.load.usage=/profile load [имя профиля]
+commands.profiles.load.invalid=Профиль '%s' не существует.
+commands.profiles.load.success=Загружен профиль '%s'.
+commands.profiles.save.usage=/profile save [имя профиля]
+commands.profiles.save.success=Активный профиль сохранён как '%s'.
+commands.profiles.delete.usage=/profile delete [имя профиля]
+commands.profiles.delete.invalid=Профиль '%s' не существует.
+commands.profiles.delete.success=Удалён профиль '%s'.
