@@ -1,0 +1,13 @@
+# Commands
+commands.profiles.usage=/profile <list|load|save|delete> [profile name]
+commands.profiles.list.empty=No profiles are available.
+commands.profiles.list.profiles=The following profiles are available (%d):
+commands.profiles.list.entry=  * %s
+commands.profiles.load.usage=/profile load [profile name]
+commands.profiles.load.invalid=Profile '%s' does not exist.
+commands.profiles.load.success=Loaded profile '%s'.
+commands.profiles.save.usage=/profile save [profile name]
+commands.profiles.save.success=Active profile saved as '%s'.
+commands.profiles.delete.usage=/profile delete [profile name]
+commands.profiles.delete.invalid=Profile '%s' does not exist.
+commands.profiles.delete.success=Deleted profile '%s'.
