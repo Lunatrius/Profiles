@@ -185,7 +185,7 @@ public class ProfileCommand extends CommandBase {
 			fileWriter = new FileWriter(file);
 			fileWriter.write(json);
 		} catch (IOException e) {
-			com.github.lunatrius.core.lib.Reference.logger.error("", e);
+			Reference.logger.error("", e);
 		} finally {
 			if (fileWriter != null) {
 				try {
