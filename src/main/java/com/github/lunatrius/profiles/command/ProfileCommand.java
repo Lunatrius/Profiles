@@ -159,7 +159,12 @@ public class ProfileCommand extends CommandBase {
 					str += line + "\n";
 				}
 
-				return this.gson.fromJson(str, new TypeToken<HashMap<String, Profile>>() {}.getType());
+				Map<String, Profile> profiles = this.gson.fromJson(str, new TypeToken<HashMap<String, Profile>>() {}.getType());
+				if (profiles != null) {
+					return profiles;
+				}
+
+				return new HashMap<String, Profile>();
 			}
 		} catch (IOException e) {
 			Reference.logger.error("IO failure!", e);
