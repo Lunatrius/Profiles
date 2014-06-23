@@ -1,0 +1,13 @@
+# Commands
+commands.profiles.usage=/profile <list|load|save|delete> [nombre de perfil]
+commands.profiles.list.empty=Ningún perfil esta disponible.
+commands.profiles.list.profiles=Los perfiles siguientes estan disponibles (%d):
+commands.profiles.list.entry=  * %s
+commands.profiles.load.usage=/profile load [nombre de perfil]
+commands.profiles.load.invalid=Perfil '%s' no existe.
+commands.profiles.load.success=Cargado perfil '%s'.
+commands.profiles.save.usage=/profile save [nombre de perfil]
+commands.profiles.save.success=Perfil activo guardado como '%s'.
+commands.profiles.delete.usage=/profile delete [nombre de perfil]
+commands.profiles.delete.invalid=Perfil '%s' no existe.
+commands.profiles.delete.success=Eliminado perfil '%s'.
