@@ -1,11 +1,14 @@
 package com.github.lunatrius.profiles;
 
+import com.github.lunatrius.profiles.lib.Reference;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.EnumDifficulty;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +58,46 @@ public class Profile {
 	private int anisotropicFiltering;
 	private boolean forceUnicodeFont;
 	private Map<SoundCategory, Float> volume;
+	private Map<String, Object> optifine = new HashMap<String, Object>();
+
+	private void fromGameSettingsOptifine(GameSettings gameSettings) {
+		for (Field field : gameSettings.getClass().getFields()) {
+			String name = field.getName();
+			if (name.startsWith("of") && !name.equals("ofKeyBindZoom")) {
+				try {
+					this.optifine.put(name, field.get(gameSettings));
+				} catch (Exception e) {
+					Reference.logger.error(String.format("Can not get property '%s'!", name), e);
+				}
+			}
+		}
+	}
+
+	private void toGameSettingsOptifine(GameSettings gameSettings) {
+		for (Field field : gameSettings.getClass().getFields()) {
+			String name = field.getName();
+			if (name.startsWith("of") && !name.equals("ofKeyBindZoom")) {
+				try {
+					Object value = this.optifine.get(name);
+
+					// JSON loads numbers as Double, have to correct that
+					if (value instanceof Number) {
+						if (field.getType() == int.class) {
+							value = ((Number) value).intValue();
+						} else if (field.getType() == float.class) {
+							value = ((Number) value).floatValue();
+						}
+					}
+
+					if (value != null) {
+						field.set(gameSettings, value);
+					}
+				} catch (Exception e) {
+					Reference.logger.error(String.format("Can not set property '%s'!", name), e);
+				}
+			}
+		}
+	}
 
 	public static Profile fromGameSettings(GameSettings gameSettings) {
 		Profile profile = new Profile();
@@ -105,6 +148,9 @@ public class Profile {
 		profile.volume = new HashMap<SoundCategory, Float>();
 		for (SoundCategory soundCategory : SoundCategory.values()) {
 			profile.volume.put(soundCategory, gameSettings.getSoundLevel(soundCategory));
+		}
+		if (FMLClientHandler.instance().hasOptifine()) {
+			profile.fromGameSettingsOptifine(gameSettings);
 		}
 		return profile;
 	}
@@ -161,6 +207,9 @@ public class Profile {
 			for (Map.Entry<SoundCategory, Float> entry : profile.volume.entrySet()) {
 				gameSettings.setSoundLevel(entry.getKey(), entry.getValue());
 			}
+		}
+		if (FMLClientHandler.instance().hasOptifine()) {
+			profile.toGameSettingsOptifine(gameSettings);
 		}
 		return gameSettings;
 	}
