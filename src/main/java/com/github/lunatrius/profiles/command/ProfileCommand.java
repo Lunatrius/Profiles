@@ -2,7 +2,6 @@ package com.github.lunatrius.profiles.command;
 
 import com.github.lunatrius.profiles.Profile;
 import com.github.lunatrius.profiles.lib.Reference;
-import com.github.lunatrius.profiles.lib.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -24,6 +23,30 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class ProfileCommand extends CommandBase {
+	public static final String NAME = "profile";
+
+	public static final String LIST = "list";
+	public static final String LOAD = "load";
+	public static final String SAVE = "save";
+	public static final String DELETE = "delete";
+
+	public static final String USAGE = "commands.profiles.usage";
+
+	public static final String LIST_EMPTY = "commands.profiles.list.empty";
+	public static final String LIST_PROFILES = "commands.profiles.list.profiles";
+	public static final String LIST_ENTRY = "commands.profiles.list.entry";
+
+	public static final String LOAD_USAGE = "commands.profiles.load.usage";
+	public static final String LOAD_INVALID = "commands.profiles.load.invalid";
+	public static final String LOAD_SUCCESS = "commands.profiles.load.success";
+
+	public static final String SAVE_USAGE = "commands.profiles.save.usage";
+	public static final String SAVE_SUCCESS = "commands.profiles.save.success";
+
+	public static final String DELETE_USAGE = "commands.profiles.delete.usage";
+	public static final String DELETE_INVALID = "commands.profiles.delete.invalid";
+	public static final String DELETE_SUCCESS = "commands.profiles.delete.success";
+
 	private final Gson gson;
 	private Map<String, Profile> profiles;
 
@@ -34,12 +57,12 @@ public class ProfileCommand extends CommandBase {
 
 	@Override
 	public String getCommandName() {
-		return Strings.COMMAND_PROFILE;
+		return NAME;
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender commandSender) {
-		return Strings.COMMAND_PROFILE_USAGE;
+		return USAGE;
 	}
 
 	@Override
@@ -50,9 +73,9 @@ public class ProfileCommand extends CommandBase {
 	@Override
 	public List addTabCompletionOptions(ICommandSender commandSender, String[] args) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, Strings.COMMAND_PROFILE_LIST, Strings.COMMAND_PROFILE_LOAD, Strings.COMMAND_PROFILE_SAVE, Strings.COMMAND_PROFILE_DELETE);
+			return getListOfStringsMatchingLastWord(args, LIST, LOAD, SAVE, DELETE);
 		} else if (args.length == 2) {
-			if (args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_LOAD) || args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_SAVE) || args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_DELETE)) {
+			if (args[0].equalsIgnoreCase(LOAD) || args[0].equalsIgnoreCase(SAVE) || args[0].equalsIgnoreCase(DELETE)) {
 				TreeSet<String> sortedProfiles = getSortedProfiles();
 				String[] profileNames = new String[sortedProfiles.size()];
 				return getListOfStringsMatchingLastWord(args, sortedProfiles.toArray(profileNames));
@@ -65,38 +88,38 @@ public class ProfileCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender commandSender, String[] args) {
 		if (args.length > 0) {
-			if (args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_LIST)) {
+			if (args[0].equalsIgnoreCase(LIST)) {
 				this.profiles = readFile(Reference.config);
 
 				if (this.profiles.size() == 0) {
-					commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_LIST_EMPTY));
+					commandSender.addChatMessage(new ChatComponentTranslation(LIST_EMPTY));
 					return;
 				}
 
 				TreeSet<String> sortedProfiles = getSortedProfiles();
-				commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_LIST_PROFILES, sortedProfiles.size()));
+				commandSender.addChatMessage(new ChatComponentTranslation(LIST_PROFILES, sortedProfiles.size()));
 				for (String name : sortedProfiles) {
-					commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_LIST_ENTRY, name));
+					commandSender.addChatMessage(new ChatComponentTranslation(LIST_ENTRY, name));
 				}
 
 				return;
-			} else if (args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_LOAD)) {
+			} else if (args[0].equalsIgnoreCase(LOAD)) {
 				this.profiles = readFile(Reference.config);
 
 				if (args.length > 1) {
 					if (!this.profiles.containsKey(args[1])) {
-						commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_LOAD_INVALID, args[1]));
+						commandSender.addChatMessage(new ChatComponentTranslation(LOAD_INVALID, args[1]));
 						return;
 					}
 
 					Profile.toGameSettings(this.profiles.get(args[1])).saveOptions();
 
-					commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_LOAD_SUCCESS, args[1]));
+					commandSender.addChatMessage(new ChatComponentTranslation(LOAD_SUCCESS, args[1]));
 					return;
 				}
 
-				throw new WrongUsageException(Strings.COMMAND_PROFILE_LOAD_USAGE);
-			} else if (args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_SAVE)) {
+				throw new WrongUsageException(LOAD_USAGE);
+			} else if (args[0].equalsIgnoreCase(SAVE)) {
 				this.profiles = readFile(Reference.config);
 
 				if (args.length > 1) {
@@ -104,27 +127,27 @@ public class ProfileCommand extends CommandBase {
 
 					saveFile(Reference.config);
 
-					commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_SAVE_SUCCESS, args[1]));
+					commandSender.addChatMessage(new ChatComponentTranslation(SAVE_SUCCESS, args[1]));
 					return;
 				}
 
-				throw new WrongUsageException(Strings.COMMAND_PROFILE_SAVE_USAGE);
-			} else if (args[0].equalsIgnoreCase(Strings.COMMAND_PROFILE_DELETE)) {
+				throw new WrongUsageException(SAVE_USAGE);
+			} else if (args[0].equalsIgnoreCase(DELETE)) {
 				this.profiles = readFile(Reference.config);
 
 				if (args.length > 1) {
 					if (this.profiles.remove(args[1]) == null) {
-						commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_DELETE_INVALID, args[1]));
+						commandSender.addChatMessage(new ChatComponentTranslation(DELETE_INVALID, args[1]));
 						return;
 					}
 
 					saveFile(Reference.config);
 
-					commandSender.addChatMessage(new ChatComponentTranslation(Strings.COMMAND_PROFILE_DELETE_SUCCESS, args[1]));
+					commandSender.addChatMessage(new ChatComponentTranslation(DELETE_SUCCESS, args[1]));
 					return;
 				}
 
-				throw new WrongUsageException(Strings.COMMAND_PROFILE_DELETE_USAGE);
+				throw new WrongUsageException(DELETE_USAGE);
 			}
 		}
 
