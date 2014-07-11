@@ -38,7 +38,6 @@ public class Profile {
 	private boolean chatLinks;
 	private boolean chatLinksPrompt;
 	private float chatOpacity;
-	private boolean serverTextures;
 	private boolean snooper;
 	private boolean fullscreen;
 	private boolean vsync;
@@ -56,6 +55,17 @@ public class Profile {
 	private boolean showInventoryAchievementHint;
 	private int mipmapLevels;
 	private int anisotropicFiltering;
+	private float streamBytesPerPixel;
+	private float streamMicVolume;
+	private float streamSystemVolume;
+	private float streamKbps;
+	private float streamFps;
+	private int streamCompression;
+	private boolean streamSendMetadata;
+	private String streamPreferredServer;
+	private int streamChatEnabled;
+	private int streamChatUserFilter;
+	private int streamMicToggleBehavior;
 	private boolean forceUnicodeFont;
 	private Map<SoundCategory, Float> volume;
 	private Map<String, Object> optifine = new HashMap<String, Object>();
@@ -102,7 +112,6 @@ public class Profile {
 	public static Profile fromGameSettings(GameSettings gameSettings) {
 		Profile profile = new Profile();
 		profile.invertMouse = gameSettings.invertMouse;
-		profile.invertMouse = gameSettings.invertMouse;
 		profile.mouseSensitivity = gameSettings.mouseSensitivity;
 		profile.fov = gameSettings.fovSetting;
 		profile.gamma = gameSettings.gammaSetting;
@@ -126,7 +135,6 @@ public class Profile {
 		profile.chatLinks = gameSettings.chatLinks;
 		profile.chatLinksPrompt = gameSettings.chatLinksPrompt;
 		profile.chatOpacity = gameSettings.chatOpacity;
-		profile.serverTextures = gameSettings.serverTextures;
 		profile.snooper = gameSettings.snooperEnabled;
 		profile.fullscreen = gameSettings.fullScreen;
 		profile.vsync = gameSettings.enableVsync;
@@ -144,6 +152,17 @@ public class Profile {
 		profile.showInventoryAchievementHint = gameSettings.showInventoryAchievementHint;
 		profile.mipmapLevels = gameSettings.mipmapLevels;
 		profile.anisotropicFiltering = gameSettings.anisotropicFiltering;
+		profile.streamBytesPerPixel = gameSettings.field_152400_J;
+		profile.streamMicVolume = gameSettings.field_152401_K;
+		profile.streamSystemVolume = gameSettings.field_152402_L;
+		profile.streamKbps = gameSettings.field_152403_M;
+		profile.streamFps = gameSettings.field_152404_N;
+		profile.streamCompression = gameSettings.field_152405_O;
+		profile.streamSendMetadata = gameSettings.field_152406_P;
+		profile.streamPreferredServer = gameSettings.field_152407_Q;
+		profile.streamChatEnabled = gameSettings.field_152408_R;
+		profile.streamChatUserFilter = gameSettings.field_152409_S;
+		profile.streamMicToggleBehavior = gameSettings.field_152410_T;
 		profile.forceUnicodeFont = gameSettings.forceUnicodeFont;
 		profile.volume = new HashMap<SoundCategory, Float>();
 		for (SoundCategory soundCategory : SoundCategory.values()) {
@@ -157,7 +176,6 @@ public class Profile {
 
 	public static GameSettings toGameSettings(Profile profile) {
 		GameSettings gameSettings = Minecraft.getMinecraft().gameSettings;
-		gameSettings.invertMouse = profile.invertMouse;
 		gameSettings.invertMouse = profile.invertMouse;
 		gameSettings.mouseSensitivity = profile.mouseSensitivity;
 		gameSettings.fovSetting = profile.fov;
@@ -184,7 +202,6 @@ public class Profile {
 		gameSettings.chatLinks = profile.chatLinks;
 		gameSettings.chatLinksPrompt = profile.chatLinksPrompt;
 		gameSettings.chatOpacity = profile.chatOpacity;
-		gameSettings.serverTextures = profile.serverTextures;
 		gameSettings.snooperEnabled = profile.snooper;
 		gameSettings.fullScreen = profile.fullscreen;
 		gameSettings.enableVsync = profile.vsync;
@@ -202,6 +219,17 @@ public class Profile {
 		gameSettings.showInventoryAchievementHint = profile.showInventoryAchievementHint;
 		gameSettings.mipmapLevels = profile.mipmapLevels;
 		gameSettings.anisotropicFiltering = profile.anisotropicFiltering;
+		gameSettings.field_152400_J = profile.streamBytesPerPixel;
+		gameSettings.field_152401_K = profile.streamMicVolume;
+		gameSettings.field_152402_L = profile.streamSystemVolume;
+		gameSettings.field_152403_M = profile.streamKbps;
+		gameSettings.field_152404_N = profile.streamFps;
+		gameSettings.field_152405_O = profile.streamCompression;
+		gameSettings.field_152406_P = profile.streamSendMetadata;
+		gameSettings.field_152407_Q = profile.streamPreferredServer;
+		gameSettings.field_152408_R = profile.streamChatEnabled;
+		gameSettings.field_152409_S = profile.streamChatUserFilter;
+		gameSettings.field_152410_T = profile.streamMicToggleBehavior;
 		gameSettings.forceUnicodeFont = profile.forceUnicodeFont;
 		if (profile.volume != null) {
 			for (Map.Entry<SoundCategory, Float> entry : profile.volume.entrySet()) {
