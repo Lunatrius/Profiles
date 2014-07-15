@@ -1,4 +1,4 @@
-# Commands
+# commands
 commands.profiles.usage=/profile <list|load|save|delete> [nombre de perfil]
 commands.profiles.list.empty=Ningún perfil esta disponible.
 commands.profiles.list.profiles=Los perfiles siguientes estan disponibles (%d):
