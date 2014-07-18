@@ -27,7 +27,7 @@ public class Profiles {
 	}
 
 	private void registerVersionChecker(ModMetadata modMetadata) {
-		VersionChecker.registerMod(modMetadata);
+		VersionChecker.registerMod(modMetadata, Reference.FORGE);
 	}
 
 	@EventHandler
