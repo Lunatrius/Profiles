@@ -17,13 +17,12 @@ import net.minecraftforge.client.ClientCommandHandler;
 public class Profiles {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		Reference.logger = event.getModLog();
+		Reference.config = event.getSuggestedConfigurationFile();
+
 		if (Loader.isModLoaded("LunatriusCore")) {
 			registerVersionChecker(event.getModMetadata());
 		}
-
-		Reference.logger = event.getModLog();
-
-		Reference.config = event.getSuggestedConfigurationFile();
 	}
 
 	private void registerVersionChecker(ModMetadata modMetadata) {
