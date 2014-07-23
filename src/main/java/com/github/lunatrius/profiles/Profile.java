@@ -1,6 +1,6 @@
 package com.github.lunatrius.profiles;
 
-import com.github.lunatrius.profiles.lib.Reference;
+import com.github.lunatrius.profiles.reference.Reference;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundCategory;

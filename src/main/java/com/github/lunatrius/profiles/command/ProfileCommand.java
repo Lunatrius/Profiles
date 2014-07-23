@@ -1,7 +1,7 @@
 package com.github.lunatrius.profiles.command;
 
 import com.github.lunatrius.profiles.Profile;
-import com.github.lunatrius.profiles.lib.Reference;
+import com.github.lunatrius.profiles.reference.Reference;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
