@@ -107,12 +107,13 @@ public class ProfileCommand extends CommandBase {
 				this.profiles = readFile(Reference.config);
 
 				if (args.length > 1) {
-					if (!this.profiles.containsKey(args[1])) {
+					Profile profile = this.profiles.get(args[1]);
+					if (profile == null) {
 						commandSender.addChatMessage(new ChatComponentTranslation(LOAD_INVALID, args[1]));
 						return;
 					}
 
-					Profile.toGameSettings(this.profiles.get(args[1])).saveOptions();
+					Profile.toGameSettings(profile).saveOptions();
 
 					commandSender.addChatMessage(new ChatComponentTranslation(LOAD_SUCCESS, args[1]));
 					return;
@@ -219,7 +220,7 @@ public class ProfileCommand extends CommandBase {
 				try {
 					fileWriter.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					Reference.logger.error("", e);
 				}
 			}
 		}
