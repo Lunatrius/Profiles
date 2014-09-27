@@ -15,26 +15,26 @@ import net.minecraftforge.client.ClientCommandHandler;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Profiles {
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		Reference.logger = event.getModLog();
-		Reference.config = event.getSuggestedConfigurationFile();
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        Reference.logger = event.getModLog();
+        Reference.config = event.getSuggestedConfigurationFile();
 
-		if (Loader.isModLoaded("LunatriusCore")) {
-			registerVersionChecker(event.getModMetadata());
-		}
-	}
+        if (Loader.isModLoaded("LunatriusCore")) {
+            registerVersionChecker(event.getModMetadata());
+        }
+    }
 
-	private void registerVersionChecker(ModMetadata modMetadata) {
-		VersionChecker.registerMod(modMetadata, Reference.FORGE);
-	}
+    private void registerVersionChecker(ModMetadata modMetadata) {
+        VersionChecker.registerMod(modMetadata, Reference.FORGE);
+    }
 
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-			ClientCommandHandler.instance.registerCommand(new ProfileCommand());
-		} else {
-			Reference.logger.warn("WARNING! You're loading a CLIENT only mod on a server!");
-		}
-	}
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+            ClientCommandHandler.instance.registerCommand(new ProfileCommand());
+        } else {
+            Reference.logger.warn("WARNING! You're loading a CLIENT only mod on a server!");
+        }
+    }
 }
